@@ -72,17 +72,50 @@ class _HomePageState extends State<HomePage> {
         onPressed:craving,icon:const Icon(Icons.favorite),label:Text(t('Craving SOS','CRAVING SOS'))))])),
     const SizedBox(height:12),Text(t('শুরু: ${quitDate.day}/${quitDate.month}/${quitDate.year}','Started: ${quitDate.day}/${quitDate.month}/${quitDate.year}'),style:const TextStyle(color:Colors.white38))
   ]);
-  Widget challenge()=>ListView(padding:const EdgeInsets.all(18),children:[
-    Text(t('৩০ দিনের চ্যালেঞ্জ','30-DAY CHALLENGE'),style:const TextStyle(fontSize:22,fontWeight:FontWeight.bold)),
-    const SizedBox(height:8),Text(t('ছোট ছোট ধাপেই বড় পরিবর্তন।','Small steps create big change.'),style:const TextStyle(color:Colors.white60)),
-    const SizedBox(height:18),
-    ...[1,3,7,14,21,30].map((d)=>Padding(padding:const EdgeInsets.only(bottom:10),child:card(Row(children:[
-      CircleAvatar(backgroundColor:days>=d?mint:Colors.white12,child:Icon(days>=d?Icons.check:Icons.flag,color:days>=d?bg:Colors.white70)),
-      const SizedBox(width:14),Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
-        Text('$d ${t('দিন','days')}',style:const TextStyle(fontWeight:FontWeight.bold)),
-        Text(days>=d?t('সম্পন্ন হয়েছে','Completed'):t('তোমার পরবর্তী লক্ষ্য','Your next milestone'),style:const TextStyle(color:Colors.white54,fontSize:12))])),
-      if(days>=d)const Icon(Icons.verified,color:mint)]))))),
-    const SizedBox(height:10),card(Text(t('Slip হলে সব শেষ নয়। আবার শুরু করাই আসল।','A slip is not failure. Starting again matters.'),style:const TextStyle(color:Colors.white70)))]);
+  Widget challenge() => ListView(
+    padding: const EdgeInsets.all(18),
+    children: [
+      Text(t('৩০ দিনের চ্যালেঞ্জ', '30-DAY CHALLENGE'),
+        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      Text(t('ছোট ছোট ধাপেই বড় পরিবর্তন।', 'Small steps create big change.'),
+        style: const TextStyle(color: Colors.white60)),
+      const SizedBox(height: 18),
+      for (final d in [1, 3, 7, 14, 21, 30])
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: card(
+            Row(children: [
+              CircleAvatar(
+                backgroundColor: days >= d ? mint : Colors.white12,
+                child: Icon(days >= d ? Icons.check : Icons.flag,
+                  color: days >= d ? bg : Colors.white70),
+              ),
+              const SizedBox(width: 14),
+              Expanded(child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('$d ${t('দিন', 'days')}',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    days >= d ? t('সম্পন্ন হয়েছে', 'Completed')
+                      : t('তোমার পরবর্তী লক্ষ্য', 'Your next milestone'),
+                    style: const TextStyle(color: Colors.white54, fontSize: 12),
+                  ),
+                ],
+              )),
+              if (days >= d) const Icon(Icons.verified, color: mint),
+            ]),
+          ),
+        ),
+      const SizedBox(height: 10),
+      card(Text(
+        t('Slip হলে সব শেষ নয়। আবার শুরু করাই আসল.',
+          'A slip is not failure. Starting again matters.'),
+        style: const TextStyle(color: Colors.white70),
+      )),
+    ],
+  );
   Widget settings()=>ListView(padding:const EdgeInsets.all(18),children:[
     Text(t('তোমার হিসাব','YOUR DETAILS'),style:const TextStyle(fontSize:22,fontWeight:FontWeight.bold)),
     const SizedBox(height:16),numberField(t('প্রতিদিন কয়টি সিগারেট খেতে?','Cigarettes per day'),perDay,(v)=>perDay=v),
