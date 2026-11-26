@@ -1,0 +1,42 @@
+name: Build QUITLY Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Create Android project shell
+        run: flutter create --platforms=android --org com.ratul.quitly --project-name quitly app
+      - name: Add QUITLY app source
+        run: |
+          cp lib/main.dart app/lib/main.dart
+          cd app
+          flutter pub add shared_preferences
+          flutter pub get
+      - name: Build release APK
+        run: cd app && flutter build apk --release
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: QUITLY-Android-APK
+          path: app/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
